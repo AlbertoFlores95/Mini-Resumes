@@ -1,7 +1,23 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿html, body {
+    height: 100%;
 }
+
+#wrap {
+    min-height: 100%;
+}
+
+#main {
+    overflow: auto;
+    padding-bottom:0px; /* this needs to be bigger than footer height*/
+}
+
+.footer {
+    position: relative;
+    margin-top: -20px; /* negative value of footer height */
+    height: 20px;
+    clear: both;
+    padding-top: 20px;
+} 
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -16,9 +32,6 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
 textarea {
-    max-width: 280px;
+    width: 100%;
 }

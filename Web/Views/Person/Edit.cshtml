@@ -1,0 +1,94 @@
+﻿@model Web.Models.Person
+@using HeyRed.MarkdownSharp
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+       
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr />
+
+                <h2 class="text-center text-capitalize">
+                    @Html.DisplayNameFor(model => model.Jobs)
+                </h2>
+
+
+        <div class="row">
+
+            @foreach (var item in Model.Jobs)
+            {
+                <div class="col-md-4 col-sm-6 hero-feature">
+                    <div class="thumbnail" style="height:350px">
+                        <div class="caption">
+                            <h2 class="text-center">@Html.DisplayFor(modelItem => item.Title)</h2>
+                            <h4 class="text-center">@Html.DisplayFor(modelItem => item.Date)</h4>
+                            <br />
+                            @Html.HiddenFor(modelItem => item.Description)
+                            <p>@Html.Raw(new Markdown().Transform(item.Description))</p>
+                            <div class="row">
+                                <div class="col-sm-offset-4 col-sm-5">
+                                    <p href="#" class="btn btn-default">@Html.ActionLink("Edit", "../Job/Edit", new { id = item.Id })</p>
+                                    <p href="#" class="btn btn-danger">@Html.ActionLink("Delete", "../Job/Delete", new { id = item.Id })</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="col-md-4 col-sm-6 hero-feature">
+                <div class="thumbnail" style="height:350px">
+                    <div class="caption">
+                        <p class="text-center">@Html.ActionLink("Add Job", "../Job/Create", new { id = Model.Id })</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-6 col-md-2">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-sm-6 text-center">
+        @Html.ActionLink("Cancel changes", "details", new { id = Model.Id }) 
+    </div>
+    <div class="col-sm-6 text-center">
+        @Html.ActionLink("Delete User", "Delete", new { id = Model.Id })
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
